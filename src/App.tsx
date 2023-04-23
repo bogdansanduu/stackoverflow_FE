@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import styled from "styled-components";
+import SidebarNav from "./components/sidebar/SidebarNav";
+import { Outlet } from "react-router-dom";
 
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+`;
+
+const Main = styled.div`
+  flex-grow: 25;
+  padding-top: 65px;
+`;
 function App() {
+  // const [token, setToken] = useState('');
+  //
+  // useEffect(() => {
+  //     const localStorageToken = localStorage.getItem("token");
+  //
+  //     if (localStorageToken) {
+  //         setToken(localStorageToken);
+  //     }
+  // }, [token])
+  //
+  // if (!token) {
+  //     return <SignIn setToken={setToken}/>
+  // }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <SidebarNav />
+      <Main>
+        <Outlet />
+      </Main>
+    </Container>
   );
 }
 
