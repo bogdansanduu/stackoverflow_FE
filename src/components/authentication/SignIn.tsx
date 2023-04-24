@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -82,7 +80,6 @@ export default function SignIn({ setToken }: any) {
           >
             <TextField
               error={emailDirty && !isEmailValid}
-              id={"email"}
               label={"Email Address"}
               name={"email"}
               variant="outlined"
@@ -96,7 +93,6 @@ export default function SignIn({ setToken }: any) {
             />
             <TextField
               error={passwordDirty && !password}
-              id={"password"}
               label={"Password"}
               name={"password"}
               variant="outlined"
@@ -117,18 +113,6 @@ export default function SignIn({ setToken }: any) {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

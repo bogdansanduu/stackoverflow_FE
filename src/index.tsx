@@ -11,6 +11,7 @@ import { persistedStore } from "./store/store";
 import UsersPage from "./pages/UsersPage";
 import QuestionsPage from "./pages/QuestionsPage";
 import App from "./App";
+import SignIn from "./components/authentication/SignIn";
 
 const NotImplemented = () => {
   return <div>Not Implemented yet</div>;
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/home",
-        element: <NotImplemented />,
+        element: <SignIn />,
       },
       {
         path: "questions",
