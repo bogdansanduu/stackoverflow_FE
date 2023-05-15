@@ -1,42 +1,41 @@
-import { CounterState } from "./store/types/CounterReducerTypes";
 import { QuestionState } from "./store/types/QuestionReducerTypes";
+import { UserState } from "./store/types/UserReducerTypes";
 
-export interface Content {
+export interface ContentType {
+  contentId: number;
   description: string;
   createdAt: string;
   updatedAt: string;
   picture: string;
 }
 
-export interface Question {
-  questionId: number;
+export interface QuestionType {
+  id: number;
   title: string;
-  content: Content;
+  content: ContentType;
   tags: {
     tagId: number;
     name: string;
   }[];
-  creator: {
-    id: number;
-    firstName: string;
-    lastName: string;
-  };
+  creator: UserType;
+  voteCount: number;
 }
 
-export interface User {
+export interface UserType {
   id: number;
   firstName: string;
   lastName: string;
 }
 
-export interface Answer {
-  answerId: number;
-  content: Content;
-  question: Question;
-  user: User;
+export interface AnswerType {
+  id: number;
+  content: ContentType;
+  question: QuestionType;
+  creator: UserType;
+  voteCount: number;
 }
 
-export interface Tag {
+export interface TagType {
   tagId: number;
   name: string;
 }
@@ -44,6 +43,6 @@ export interface Tag {
 //--------------STORE-----------
 
 export type RootState = {
-  counter: CounterState;
+  user: UserState;
   question: QuestionState;
 };

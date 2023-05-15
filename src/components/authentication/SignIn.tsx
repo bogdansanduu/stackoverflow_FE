@@ -11,6 +11,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { signIn } from "../../api/AuthApi";
 import isEmail from "validator/lib/isEmail";
+import { useDispatch } from "react-redux";
+import { SET_CURRENT_USER } from "../../store/actions/UserActions";
 
 const theme = createTheme();
 
@@ -23,6 +25,8 @@ export default function SignIn({ setToken }: any) {
   const [passwordDirty, setPasswordDirty] = useState(false);
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
+  const dispatch = useDispatch();
 
   const handleEmailChange = (event: any) => {
     const val = event.target.value;
@@ -40,12 +44,15 @@ export default function SignIn({ setToken }: any) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const token = await signIn({
+    const { token, user } = await signIn({
       email: data.get("email"),
       password: data.get("password"),
     });
 
-    setToken(token);
+    if (token !== null && user !== null) {
+      setToken(token);
+      dispatch(SET_CURRENT_USER(user));
+    }
   };
 
   useEffect(() => {

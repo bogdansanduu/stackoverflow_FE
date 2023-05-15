@@ -11,11 +11,10 @@ import { FineLine } from "../styledComponents/FineLine";
 import { SET_CURRENT_QUESTION } from "../../store/actions/QuestionsActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { Question } from "../../types";
-import VoteButton from "../vote/VoteButton";
+import { QuestionType } from "../../types";
 
 interface QuestionProps {
-  question: Question;
+  question: QuestionType;
 }
 
 const SmallQuestion = ({ question }: QuestionProps) => {
@@ -26,7 +25,7 @@ const SmallQuestion = ({ question }: QuestionProps) => {
 
   const handleClick = () => {
     dispatch(SET_CURRENT_QUESTION(question));
-    navigate(`/questions/${question.questionId}`);
+    navigate(`/questions/${question.id}`);
   };
 
   return (
@@ -46,6 +45,7 @@ const SmallQuestion = ({ question }: QuestionProps) => {
         subheader={date.toLocaleDateString()}
       />
       <CardContent>
+        <Typography gutterBottom>Votes: {question.voteCount}</Typography>
         <Typography variant="body2" color="text.secondary">
           {question.content.description}
         </Typography>

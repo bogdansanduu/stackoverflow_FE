@@ -3,7 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import ExpandedQuestionPage from "./pages/ExpandedQuestionPage";
 import ErrorPage from "./pages/NotFoundPage";
 import { PersistGate } from "redux-persist/integration/react";
@@ -11,7 +15,7 @@ import { persistedStore } from "./store/store";
 import UsersPage from "./pages/UsersPage";
 import QuestionsPage from "./pages/QuestionsPage";
 import App from "./App";
-import SignIn from "./components/authentication/SignIn";
+import HomePage from "./pages/HomePage";
 
 const NotImplemented = () => {
   return <div>Not Implemented yet</div>;
@@ -29,11 +33,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <NotImplemented />,
+        element: <Navigate to={"/home"} />,
       },
       {
         path: "/home",
-        element: <SignIn />,
+        element: <HomePage />,
       },
       {
         path: "questions",

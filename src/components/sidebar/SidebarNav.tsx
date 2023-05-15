@@ -25,6 +25,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router";
 import logo from "../../images/1280px-Stack_Overflow_logo.svg.png";
+import Button from "@mui/material/Button";
 
 const drawerWidth = 240;
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -96,7 +97,11 @@ const Drawer = muiStyled(MuiDrawer, {
   }),
 }));
 
-const SidebarNav = () => {
+interface SidebarNavProps {
+  setToken: (value: string) => void;
+}
+
+const SidebarNav = ({ setToken }: SidebarNavProps) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -108,6 +113,12 @@ const SidebarNav = () => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/");
   };
 
   return (
@@ -129,6 +140,14 @@ const SidebarNav = () => {
               <MenuIcon />
             </IconButton>
             <img src={logo} alt={"logo"} style={{ height: 50 }} />
+            <Button
+              color="warning"
+              variant="contained"
+              sx={{ marginLeft: "auto" }}
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </Button>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -207,7 +226,19 @@ const SidebarNav = () => {
               </ListItemButton>
             </ListItem>
           </List>
-          <div style={{ marginTop: "auto" }}>footer</div>
+          <Divider />
+          <div
+            style={{
+              marginTop: "auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "5px",
+              fontSize: "25px",
+            }}
+          >
+            {String.fromCodePoint(0x1f920)}
+          </div>
           <Divider />
         </Drawer>
       </Box>

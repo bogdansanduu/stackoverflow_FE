@@ -1,8 +1,14 @@
 import axios from "axios";
-import { Tag } from "../types";
+import { TagType } from "../types";
 
 const tagApi = axios.create({
   baseURL: "http://localhost:8080/tags",
+});
+
+tagApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = token !== null ? `Bearer ${token}` : "";
+  return config;
 });
 
 export const getAllTags = () => {
@@ -10,7 +16,7 @@ export const getAllTags = () => {
 };
 
 export const addTagsToQuestion = async (tags: string[], questionId: number) => {
-  const returnedTags: Tag[] = [];
+  const returnedTags: TagType[] = [];
 
   for (const tag of tags) {
     const { data: tagResponse } = await tagApi.post("/addTagToQuestion", {

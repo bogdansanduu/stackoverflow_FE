@@ -8,13 +8,13 @@ import FileBase64 from "react-file-base64";
 import { FORM_TYPE } from "../../CONSTANTS";
 import { addAnswer } from "../../api/AnswerApi";
 import { useSelector } from "react-redux";
-import { Answer, Question, RootState, Tag } from "../../types";
+import { AnswerType, QuestionType, RootState, TagType } from "../../types";
 import { addTagsToQuestion, getAllTags } from "../../api/TagApi";
 import { Autocomplete, Chip } from "@mui/material";
 
 interface FormProps {
   setOpenModal?: (value: boolean) => void;
-  type: number;
+  type: FORM_TYPE;
 
   answers?: any;
   setAnswers?: (value: any) => void;
@@ -22,6 +22,7 @@ interface FormProps {
   questions?: any;
   setQuestions?: (value: any) => void;
 }
+
 const Form = ({
   setOpenModal,
   type,
@@ -38,35 +39,35 @@ const Form = ({
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
       if (type === FORM_TYPE.QUESTION) {
-        const { data: question }: { data: Question } = await addQuestion({
+        const { data: question }: { data: QuestionType } = await addQuestion({
           title,
           description,
-          userId: 1,
+          userId: currentUser.id,
           picture,
         });
 
-        question.tags = await addTagsToQuestion(
-          selectedTags,
-          question.questionId
-        );
+        question.tags = await addTagsToQuestion(selectedTags, question.id);
 
-        setQuestions && setQuestions([...questions, question]);
+        setQuestions && setQuestions([question, ...questions]);
       }
 
       if (type === FORM_TYPE.ANSWER) {
-        const { data: answer }: { data: Answer } = await addAnswer({
-          userId: 1,
+        console.log(picture);
+        const { data: answer }: { data: AnswerType } = await addAnswer({
+          userId: currentUser.id,
           picture,
           description,
-          questionId: currentQuestion.questionId,
+          questionId: currentQuestion.id,
         });
 
-        setAnswers && setAnswers([...answers, answer]);
+        setAnswers && setAnswers([answer, ...answers]);
       }
     } catch (e) {
       console.log("Error Adding Question/Answer !!!");
@@ -80,7 +81,7 @@ const Form = ({
       try {
         const { data: tags } = await getAllTags();
 
-        const tagNames = tags.map((tag: Tag) => tag.name);
+        const tagNames = tags.map((tag: TagType) => tag.name);
 
         setTags(tagNames);
       } catch (e) {
@@ -91,31 +92,35 @@ const Form = ({
     fetchTags();
   }, []);
 
-  const isDisabled = !!title && !!description && !!picture;
+  const isDisabled =
+    type === FORM_TYPE.QUESTION
+      ? !!title && !!description && !!picture
+      : !!description && !!picture;
+
   const typeText = type === FORM_TYPE.QUESTION ? "Question" : "Answer";
 
-  const placeHolderTitle =
-    type === FORM_TYPE.QUESTION
-      ? "What's your programming question? Be specific."
-      : "Resume your answer in a sentence.";
+  const placeHolderTitle = "What's your programming question? Be specific.";
 
   const placeHolderDescription =
     type === FORM_TYPE.QUESTION
       ? "Describe your problem in detail. The more information you give, the better answers you'll get."
       : "Your answer should be as detailed as possible.";
+
   return (
     <form onSubmit={handleSubmit} style={{ padding: "16px" }}>
-      <TextField
-        type="text"
-        variant="outlined"
-        label="Title"
-        placeholder={placeHolderTitle}
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-        fullWidth
-        required
-        sx={{ marginBottom: 2 }}
-      />
+      {type === FORM_TYPE.QUESTION && (
+        <TextField
+          type="text"
+          variant="outlined"
+          label="Title"
+          placeholder={placeHolderTitle}
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          fullWidth
+          required
+          sx={{ marginBottom: 2 }}
+        />
+      )}
       <TextField
         type="text"
         variant="outlined"

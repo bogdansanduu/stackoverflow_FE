@@ -1,17 +1,19 @@
 import { QuestionAction, QuestionState } from "../types/QuestionReducerTypes";
-import { Question } from "../../types";
+import { QuestionType } from "../../types";
 
-const INITIAL_STATE_QUESTION: Question = {
+const INITIAL_STATE_QUESTION: QuestionType = {
   content: {
+    contentId: -1,
     description: "",
     createdAt: "",
     updatedAt: "",
     picture: "",
   },
   creator: { firstName: "", id: 0, lastName: "" },
-  questionId: 0,
+  id: 0,
   tags: [],
   title: "",
+  voteCount: 0,
 };
 
 const INITIAL_STATE: QuestionState = {

@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
-import { Tag } from "../../types";
+import { TagType } from "../../types";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,7 +30,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 }
 
 interface TagsDropdownProps {
-  tags: Tag[];
+  tags: TagType[];
 }
 const TagsDropdown = ({ tags }: TagsDropdownProps) => {
   const theme = useTheme();
