@@ -94,7 +94,7 @@ const Answer = ({ answer, deleteAnswer, setAnswers, answers }: AnswerProps) => {
                 Posted on: {answerDate.toLocaleDateString()}
               </Typography>
             </div>
-            {isDisabled && (
+            {(currentUser.role === "admin" || isDisabled) && (
               <div style={{ display: "flex", marginLeft: "auto" }}>
                 <IconButton onClick={handleUpdateAnswer}>
                   <ModeEditIcon style={{ fontSize: "35px" }} />

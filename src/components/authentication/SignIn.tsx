@@ -44,14 +44,18 @@ export default function SignIn({ setToken }: any) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const { token, user } = await signIn({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      const { token, user } = await signIn({
+        email: data.get("email"),
+        password: data.get("password"),
+      });
 
-    if (token !== null && user !== null) {
-      setToken(token);
-      dispatch(SET_CURRENT_USER(user));
+      if (token !== null && user !== null) {
+        setToken(token);
+        dispatch(SET_CURRENT_USER(user));
+      }
+    } catch (e) {
+      alert("INCORRECT LOGIN INFORMATION OR USER IS BANNED");
     }
   };
 

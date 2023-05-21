@@ -49,18 +49,18 @@ const ExpandedQuestionPage = () => {
 
   const date = new Date(currentQuestion.content.createdAt);
 
-  const handleDeleteAnswer = (answerToDelete: AnswerType) => {
+  const handleDeleteAnswer = async (answerToDelete: AnswerType) => {
     const updatedAnswers = answers.filter(
       (answer) => answer.id !== answerToDelete.id
     );
 
-    deleteAnswer({ answerId: answerToDelete.id });
+    await deleteAnswer({ answerId: answerToDelete.id });
 
     setAnswers(updatedAnswers);
   };
 
-  const handleDeleteQuestion = () => {
-    deleteQuestion({ questionId: currentQuestion.id });
+  const handleDeleteQuestion = async () => {
+    await deleteQuestion({ questionId: currentQuestion.id });
     navigate("/questions");
   };
 
@@ -106,7 +106,7 @@ const ExpandedQuestionPage = () => {
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography variant="h4">{currentQuestion.title}</Typography>
-                {isDisabled && (
+                {(currentUser.role === "admin" || isDisabled) && (
                   <div style={{ display: "flex" }}>
                     <IconButton onClick={handleUpdateQuestion}>
                       <ModeEditIcon style={{ fontSize: "35px" }} />

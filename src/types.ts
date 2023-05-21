@@ -25,6 +25,9 @@ export interface UserType {
   id: number;
   firstName: string;
   lastName: string;
+  score: number;
+  role: string;
+  banned: boolean;
 }
 
 export interface AnswerType {

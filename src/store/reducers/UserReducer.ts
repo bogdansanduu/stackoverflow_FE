@@ -5,6 +5,9 @@ const INITIAL_STATE_USER: UserType = {
   firstName: "",
   id: 0,
   lastName: "",
+  score: 0,
+  role: "user",
+  banned: false,
 };
 
 const INITIAL_STATE: UserState = {

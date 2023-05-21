@@ -1,7 +1,7 @@
 import { Autocomplete, InputAdornment, TextField } from "@mui/material";
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { QuestionType, TagType, UserType } from "../types";
+import { QuestionType, TagType, UserType } from "../../types";
 
 interface SearchBarProps {
   questions: QuestionType[];
@@ -9,6 +9,7 @@ interface SearchBarProps {
   tags: TagType[];
   users: UserType[];
 }
+
 const SearchBar = ({
   questions,
   setCurrentQuestions,
@@ -57,9 +58,6 @@ const SearchBar = ({
   };
 
   const renderUserLabel = (user: UserType) => {
-    //TODO AFTER IMPLEMENTING AUTH AND STORING CURRENT USER
-    //const isCurrentUser =
-
     return `${user.firstName} ${user.lastName}`;
   };
 

@@ -8,9 +8,14 @@ import {
   Typography,
   Avatar,
 } from "@material-ui/core";
-import { UserType } from "../types";
+import { RootState, UserType } from "../types";
+import { IconButton } from "@mui/material";
+import BlockIcon from "@mui/icons-material/Block";
+import { useSelector } from "react-redux";
+import { banUser } from "../api/AdminApi";
 
 const UsersPage = () => {
+  const { currentUser } = useSelector((state: RootState) => state.user);
   const [users, setUsers] = useState<UserType[]>([]);
 
   useEffect(() => {
@@ -27,6 +32,19 @@ const UsersPage = () => {
     fetchUsers();
   }, []);
 
+  const handleBanUser = async (user: UserType) => {
+    const { data: bannedUser } = await banUser(user.id);
+
+    const updatedUsers = users.map((currentUser) => {
+      if (currentUser.id === bannedUser.id) {
+        return bannedUser;
+      }
+      return currentUser;
+    });
+
+    setUsers(updatedUsers);
+  };
+
   return (
     <>
       <Typography variant="h6">Users</Typography>
@@ -41,10 +59,24 @@ const UsersPage = () => {
                   <Avatar>{`${user.firstName[0]}${user.lastName[0]}`}</Avatar>
                 }
                 title={`${user.firstName} ${user.lastName}`}
+                subheader={`SCORE: ${user.score}`}
+                action={
+                  currentUser.role === "admin" && (
+                    <IconButton
+                      aria-label="ban"
+                      onClick={() => {
+                        handleBanUser(user);
+                      }}
+                    >
+                      <BlockIcon />
+                    </IconButton>
+                  )
+                }
               />
               <CardContent>
                 <Typography variant="body2" color="textSecondary">
-                  OTHER INFO
+                  <p>{user.role}</p>
+                  <p>User Status: {user.banned ? "BANNED" : "NOT BANNED"}</p>
                 </Typography>
               </CardContent>
             </Card>

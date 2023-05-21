@@ -116,7 +116,7 @@ const SidebarNav = ({ setToken }: SidebarNavProps) => {
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setToken("");
     navigate("/");
   };

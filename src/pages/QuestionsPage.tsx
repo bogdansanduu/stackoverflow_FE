@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import questionApi, { deleteQuestion } from "../api/QuestionApi";
+import questionApi from "../api/QuestionApi";
 import Button from "@mui/material/Button";
 import { QuestionType, TagType, UserType } from "../types";
 import SmallQuestion from "../components/question/SmallQuestion";
@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Form from "../components/form/Form";
 import { FORM_TYPE } from "../CONSTANTS";
-import SearchBar from "../search/SearchBar";
+import SearchBar from "../components/search/SearchBar";
 import { getAllTags } from "../api/TagApi";
 import { getAllUsers } from "../api/UserApi";
 
